@@ -1,11 +1,20 @@
 <template>
-  <div class="QuestionConatiner">
-    <question-form
-      v-for="question in questions"
-      :key="question.question"
-      :question="question"
-      @valueChanged="valueChanged"
-    />
+  <div>
+    <div class="QuestionConatiner">
+      <div v-for="question in questions"
+           :key="question.id">
+        <boolean-question
+          v-if="isBooleanQuestion(question)"
+          :question="question"
+          @valueChanged="valueChanged"
+        />
+        <scale-question
+          v-if="isScaleQuestion(question)"
+          :question="question"
+          @valueChanged="valueChanged"
+        />
+      </div>
+    </div>
     <div v-if="!lastQuestion" class="NextPage">
       <b-button block variant="primary" @click.prevent="onNextPageClicked">
         Next Page
@@ -25,23 +34,33 @@
 </template>
 
 <script>
-import QuestionForm from "./QuestionForm.vue";
+import BooleanQuestion from '@/components/BooleanQuestion';
+import ScaleQuestion from '@/components/ScaleQuestion';
 
 export default {
-  components: { QuestionForm },
-  props: ["questions", "lastQuestion", "firstQuestion", "showResult"],
+  components: {
+    BooleanQuestion,
+    ScaleQuestion
+  },
+  props: ['questions', 'lastQuestion', 'firstQuestion', 'showResult'],
   methods: {
     onNextPageClicked() {
-      this.$emit("nextPage");
+      this.$emit('nextPage');
     },
     onBackPageClicked() {
-      this.$emit("backPage");
+      this.$emit('backPage');
     },
     onShowResultClicked() {
-      this.$emit("showResult");
+      this.$emit('showResult');
     },
     valueChanged($event) {
-      this.$emit("valueChanged", $event);
+      this.$emit('valueChanged', $event);
+    },
+    isBooleanQuestion(question) {
+      return question.type === 'bool';
+    },
+    isScaleQuestion(question) {
+      return question.type === 'likert';
     },
   },
 };

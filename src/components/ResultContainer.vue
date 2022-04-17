@@ -1,9 +1,18 @@
 <template>
   <div class="result-container">
+    <p>Winner: {{ getArchitectureWinner }}</p>
     <table>
       <tr v-for="data in resultData" :key="data.name">
         <td>{{ data.name }}</td>
-        <td>{{ data.weightedAverage }}</td>
+        <td>{{ data.weight }}</td>
+        <td>{{ data.monolithAverage }}</td>
+        <td>{{data.microServiceAverage}}</td>
+      </tr>
+      <tr>
+        <td>total</td>
+        <td>100%</td>
+        <td>{{monolithTotal}}</td>
+        <td>{{microServiceTotal }}</td>
       </tr>
     </table>
   </div>
@@ -11,63 +20,79 @@
 
 <script>
 export default {
-  props: ["questions", "answers"],
-  data: function () {
+  props: ['questions', 'answers'],
+  data() {
     return {
       resultData: [],
+      microServiceTotal: 0,
+      monolithTotal: 0,
     };
   },
   computed: {
-    categories: function () {
+    categories() {
       return Object.keys(this.questions);
+    },
+    getArchitectureWinner() {
+      if (this.monolithTotal >= this.microServiceTotal) {
+        return 'Monolith';
+      }
+      return 'Micro Services';
     },
   },
   methods: {
     calculateCategoryAverage(categoryName) {
-      const questionIds = this.questions[categoryName].map((question) => {
-        return question.id;
-      });
-      let categoryCounter = 0;
-      const categorySum = Object.keys(this.answers)
-        .filter((key) => {
-          return questionIds.includes(key);
-        })
-        .filter((key) => {
-          return !isNaN(this.answers[key]);
-        })
-        .map((key) => {
-          categoryCounter++;
-          return parseInt(this.answers[key]);
-        })
-        .reduce((a, b) => a + b, 0);
-      console.log("-> ", categorySum, categoryCounter);
-      return categorySum / categoryCounter;
+      const weight = 0.1;
+      const questionIds = this.questions[categoryName].map((question) => question.id);
+      let microSum = 0;
+      let monoSum = 0;
+      let count = 0;
+      for (const key in this.answers) {
+        if (!questionIds.includes(key)) {
+          continue;
+        }
+        const answer = this.answers[key];
+        const answerParts = answer.split(':');
+        if (answerParts[0] === 'mi') {
+          microSum += parseInt(answerParts[1]);
+          count++;
+        } else if (answerParts[0] === 'mo') {
+          monoSum += parseInt(answerParts[1]);
+          count++;
+        }
+      }
+
+      const monoAvg = (monoSum / count) * weight;
+      const microAvg = (microSum / count) * weight;
+
+      return {
+        weight,
+        monoAvg,
+        microAvg,
+      };
     },
   },
   created() {
-    let list = [];
+    const list = [];
+    let monolithTotal = 0;
+    let microServiceTotal = 0;
     this.categories.forEach((categoryName) => {
-      const categoryAverage = this.calculateCategoryAverage(categoryName);
+      const avgs = this.calculateCategoryAverage(categoryName);
       const entry = {
         name: categoryName,
-        average: categoryAverage,
+        weight: avgs.weight,
+        monolithAverage: avgs.monoAvg,
+        microServiceAverage: avgs.microAvg,
       };
-      if (!isNaN(categoryAverage)) {
-        list.push(entry);
-      }
+
+      monolithTotal += avgs.monoAvg;
+      microServiceTotal += avgs.microAvg;
+
+      list.push(entry);
     });
 
-    const totalSum = list.reduce((a, b) => {
-      return a + b.average;
-    }, 0);
+    this.monolithTotal = monolithTotal;
+    this.microServiceTotal = microServiceTotal;
 
-    list = list.map((entry) => {
-      return {
-        name: entry.name,
-        weightedAverage: entry.average / totalSum,
-      };
-    });
-    console.log(list);
     this.resultData = list;
   },
 };

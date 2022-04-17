@@ -24,35 +24,106 @@
 </template>
 
 <script>
-import QuestionContainer from "./QuestionContainer.vue";
-import QuestionnaireNavigation from "./QuestionnaireNavigation.vue";
-import ResultContainer from "./ResultContainer.vue";
+import QuestionContainer from './QuestionContainer.vue';
+import QuestionnaireNavigation from './QuestionnaireNavigation.vue';
+import ResultContainer from './ResultContainer.vue';
 
 const questions = {
-  Faktor1: [
+  functionality: [
     {
-      question: "This is the question text",
-      type: "likert",
-    },
-    {
-      question: "This is the question text 2",
-      type: "bool",
-    },
-  ],
-  Faktor2: [
-    {
-      question: "This is the question text",
-      type: "bool",
+      question: 'Was ist der Einsatzzweck der Applikation? Welche Kritikalität hat die Applikation für das Business?',
+      type: 'likert',
+      property: {
+        left: 'Proof of Concept',
+        right: 'Business Critical',
+      },
     },
   ],
-  Faktor3: [
+  performance: [
     {
-      question: "This is the question text",
-      type: "likert",
+      question: 'Benötigst du eine schnelle Antwortzeit oder Skalierbarkeit',
+      type: 'likert',
+      property: {
+        left: 'Kurze Latenz',
+        right: 'Skalierbarkeit',
+      },
+    }, {
+      question: 'This is the question text',
+      type: 'likert',
+      property: {
+        left: 'Einfache Architektur',
+        right: 'Skalierbarkeit',
+      },
+    },
+  ],
+  Reliability: [
+    {
+      question: 'Bist du für eine höhere Zuverlässigkeit bereit eine schwierigere Konfigruation in Kauf zunehmen ',
+      type: 'likert',
+      property: {
+        left: 'einfache Konfiguration',
+        right: 'Reliability',
+      },
+    },
+  ],
+  Security: [
+    {
+      question: 'Performance vs Sicherheit ',
+      type: 'likert',
+      property: {
+        left: 'Performance',
+        right: 'Sicherheit',
+      },
+    },
+  ],
+  maintainability: [
+    {
+      question: 'Kein Schnittstellenmanagement vs Erhöhte Wartbarkeit',
+      type: 'likert',
+      property: {
+        left: 'Kein Schnittstellenmanagment',
+        right: 'Erhöhte Wartbarkeit',
+      },
     },
     {
-      question: "This is the question text 2",
-      type: "bool",
+      question: 'Tiefe Initialkosten, höhere Wartungskosten vs Hohe Initialkosten, tiefere Wartungskosten',
+      type: 'likert',
+      property: {
+        left: 'Tiefe Initialkosten, höhere Wartungskosten',
+        right: 'Hohe Initialkosten, tiefere Wartungskosten',
+      },
+    }, {
+      question: 'Testbarkeit vs Flexibilität',
+      type: 'likert',
+      property: {
+        left: 'Testbarkeit',
+        right: 'Flexibilität',
+      },
+    },
+  ],
+  Kultur: [
+    {
+      question: 'Einfache Architektur vs Entwicklungsgeschwindigkeit',
+      type: 'likert',
+      property: {
+        left: 'Einfache Architektur ',
+        right: 'Entwicklungsgeschwindigkeit',
+      },
+    },
+    {
+      question: 'Klassische Kultur vs DevOps Kultur',
+      type: 'likert',
+      property: {
+        left: 'Klassische Kultur',
+        right: 'DevOps Kultur',
+      },
+    }, {
+      question: 'Projektgrösse',
+      type: 'likert',
+      property: {
+        left: 'Klein',
+        right: 'Gross',
+      },
     },
   ],
 };
@@ -69,19 +140,19 @@ export default {
     };
   },
   computed: {
-    currentQuestions: function () {
+    currentQuestions() {
       return questions[this.currentCategory];
     },
-    currentNavigation: function () {
+    currentNavigation() {
       return this.currentCategory;
     },
-    isLastCategory: function () {
+    isLastCategory() {
       return Object.keys(questions).length - 1 === this.currentCategoryIndex;
     },
-    isFirstCategory: function () {
+    isFirstCategory() {
       return this.currentCategoryIndex === 0;
     },
-    allQuestions: function () {
+    allQuestions() {
       return questions;
     },
   },
@@ -108,7 +179,7 @@ export default {
       const tempQuestions = questions[key];
       let i = 0;
       tempQuestions.map((question) => {
-        question.id = key + "." + i;
+        question.id = `${key}.${i}`;
         i++;
         return question;
       });
