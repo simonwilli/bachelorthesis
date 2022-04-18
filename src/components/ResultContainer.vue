@@ -6,13 +6,13 @@
         <td>{{ data.name }}</td>
         <td>{{ data.weight }}</td>
         <td>{{ data.monolithAverage }}</td>
-        <td>{{data.microServiceAverage}}</td>
+        <td>{{ data.microServiceAverage }}</td>
       </tr>
       <tr>
         <td>total</td>
         <td>100%</td>
-        <td>{{monolithTotal}}</td>
-        <td>{{microServiceTotal }}</td>
+        <td>{{ monolithTotal }}</td>
+        <td>{{ microServiceTotal }}</td>
       </tr>
     </table>
   </div>
@@ -20,7 +20,7 @@
 
 <script>
 export default {
-  props: ['questions', 'answers'],
+  props: ['questions', 'answers', 'categoryNames'],
   data() {
     return {
       resultData: [],
@@ -29,10 +29,11 @@ export default {
     };
   },
   computed: {
-    categories() {
-      return Object.keys(this.questions);
-    },
     getArchitectureWinner() {
+      if (this.monolithTotal === this.microServiceTotal) {
+        return 'Both architectures fit equally well';
+      }
+
       if (this.monolithTotal >= this.microServiceTotal) {
         return 'Monolith';
       }
@@ -40,9 +41,21 @@ export default {
     },
   },
   methods: {
-    calculateCategoryAverage(categoryName) {
-      const weight = 0.1;
-      const questionIds = this.questions[categoryName].map((question) => question.id);
+    getCategoryByName(categoryName) {
+      for (const category of this.questions) {
+        if (category.categoryName === categoryName) {
+          return category;
+        }
+      }
+      return null;
+    },
+    getQuestionIdsForCategory(category) {
+      return category.questions.map((question) => question.id);
+    },
+    calculateCategoryAverages(categoryName) {
+      const category = this.getCategoryByName(categoryName);
+      const questionIds = this.getQuestionIdsForCategory(category);
+      const categoryWeight = category.weight;
       let microSum = 0;
       let monoSum = 0;
       let count = 0;
@@ -53,21 +66,21 @@ export default {
         const answer = this.answers[key];
         const answerParts = answer.split(':');
         if (answerParts[0] === 'mi') {
-          microSum += parseInt(answerParts[1]);
+          microSum += parseInt(answerParts[1], 10);
           count++;
         } else if (answerParts[0] === 'mo') {
-          monoSum += parseInt(answerParts[1]);
+          monoSum += parseInt(answerParts[1], 10);
           count++;
         }
       }
 
-      const monoAvg = (monoSum / count) * weight;
-      const microAvg = (microSum / count) * weight;
+      const monoAvg = (monoSum / count) * categoryWeight;
+      const microAvg = (microSum / count) * categoryWeight;
 
       return {
-        weight,
-        monoAvg,
-        microAvg,
+        weight: categoryWeight,
+        monolithAverage: monoAvg,
+        microServiceAverage: microAvg,
       };
     },
   },
@@ -75,20 +88,20 @@ export default {
     const list = [];
     let monolithTotal = 0;
     let microServiceTotal = 0;
-    this.categories.forEach((categoryName) => {
-      const avgs = this.calculateCategoryAverage(categoryName);
+    for (const categoryName of this.categoryNames) {
+      const calculatedValues = this.calculateCategoryAverages(categoryName);
       const entry = {
         name: categoryName,
-        weight: avgs.weight,
-        monolithAverage: avgs.monoAvg,
-        microServiceAverage: avgs.microAvg,
+        weight: calculatedValues.weight,
+        monolithAverage: calculatedValues.monolithAverage,
+        microServiceAverage: calculatedValues.microServiceAverage,
       };
 
-      monolithTotal += avgs.monoAvg;
-      microServiceTotal += avgs.microAvg;
+      monolithTotal += calculatedValues.monolithAverage;
+      microServiceTotal += calculatedValues.microServiceAverage;
 
       list.push(entry);
-    });
+    }
 
     this.monolithTotal = monolithTotal;
     this.microServiceTotal = microServiceTotal;

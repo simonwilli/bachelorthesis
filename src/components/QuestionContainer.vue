@@ -1,8 +1,7 @@
 <template>
   <div>
     <div class="QuestionConatiner">
-      <div v-for="question in questions"
-           :key="question.id">
+      <div v-for="question in questions" :key="question.id">
         <boolean-question
           v-if="isBooleanQuestion(question)"
           :question="question"
@@ -15,32 +14,26 @@
         />
       </div>
     </div>
-    <div v-if="!lastQuestion" class="NextPage">
-      <b-button block variant="primary" @click.prevent="onNextPageClicked">
-        Next Page
-      </b-button>
-    </div>
-    <div v-if="!firstQuestion" class="BackPage">
-      <b-button block variant="primary" @click.prevent="onBackPageClicked">
-        Back Page
-      </b-button>
-    </div>
-    <div v-if="lastQuestion" class="ShowResult">
-      <b-button block variant="primary" @click.prevent="onShowResultClicked">
-        Show Result
-      </b-button>
-    </div>
+    <b-button variant="primary" @click.prevent="onBackPageClicked" v-if="!firstQuestion">
+      Back Page
+    </b-button>
+    <b-button variant="primary" @click.prevent="onNextPageClicked" v-if="!lastQuestion">
+      Next Page
+    </b-button>
+    <b-button variant="primary" @click.prevent="onShowResultClicked" v-if="lastQuestion">
+      Show Result
+    </b-button>
   </div>
 </template>
 
 <script>
-import BooleanQuestion from '@/components/BooleanQuestion';
-import ScaleQuestion from '@/components/ScaleQuestion';
+import BooleanQuestion from '@/components/BooleanQuestion.vue';
+import ScaleQuestion from '@/components/ScaleQuestion.vue';
 
 export default {
   components: {
     BooleanQuestion,
-    ScaleQuestion
+    ScaleQuestion,
   },
   props: ['questions', 'lastQuestion', 'firstQuestion', 'showResult'],
   methods: {
