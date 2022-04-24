@@ -5,6 +5,7 @@
         v-for="nav in navigation"
         :key="nav"
         :class="isCurrentCategory(nav)"
+        @click="changeNavigation(nav)"
         >{{ nav }}</span
       >
     </p>
@@ -12,18 +13,22 @@
 </template>
 
 <script>
-import DocumentationFrame from "../components/DocumentationFrame.vue";
+import DocumentationFrame from './DocumentationFrame.vue';
 
 export default {
-  props: ["navigation", "currentCategory"],
+  props: ['navigation', 'currentCategory'],
   components: { DocumentationFrame },
   methods: {
     isCurrentCategory(navigation) {
       if (navigation === this.currentCategory) {
-        return "selected";
-      } else {
-        return "";
+        return 'selected';
       }
+      return '';
+    },
+    changeNavigation(categoryName) {
+      this.$emit('navigationChange', {
+        categoryName,
+      });
     },
   },
 };

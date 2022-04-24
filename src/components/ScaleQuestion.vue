@@ -14,15 +14,14 @@
               value-field="item"
               text-field="name"
               @input="likertScaleChanged($event)"
+              buttons
+              button-variant="outline-primary"
             >
             </b-form-radio-group>
           </div>
           <div class="question-grid-right">
             <p v-if="hasRightText" class="left-text">{{ getQuestionTextRight }}</p>
           </div>
-        </div>
-        <div class="mt-3">
-          Selected: <strong>{{ result }}</strong>
         </div>
       </b-card-text>
     </b-card>
@@ -31,34 +30,43 @@
 
 <script>
 export default {
-  props: ['question'],
+  props: {
+    question: Object,
+    answer: Object,
+    optionValues: {
+      type: Array,
+      default() {
+        return ['1', '2', '3', '4', '5', '6'];
+      },
+    },
+  },
   data() {
     return {
-      selected: [], // Must be an array reference!
+      selected: this.answer == null ? null : this.answer,
       options: [
         {
           item: 'mo:3',
-          name: 'value 1',
+          name: this.optionValues[0],
         },
         {
           item: 'mo:2',
-          name: 'value 2',
+          name: this.optionValues[1],
         },
         {
           item: 'mo:1',
-          name: 'value 3',
+          name: this.optionValues[2],
         },
         {
           item: 'mi:1',
-          name: 'value 4',
+          name: this.optionValues[3],
         },
         {
           item: 'mi:2',
-          name: 'value 5',
+          name: this.optionValues[4],
         },
         {
           item: 'mi:3',
-          name: 'value 6',
+          name: this.optionValues[5],
         },
       ],
     };
@@ -83,9 +91,6 @@ export default {
     },
     getQuestionTextRight() {
       return this.question.properties.right;
-    },
-    result() {
-      return (`QuestionNumber: ${this.question.id} Selected: ${this.selected}`);
     },
   },
 };

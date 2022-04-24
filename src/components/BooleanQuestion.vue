@@ -4,7 +4,6 @@
       <b-card-text>
         <p>{{ question.question }}</p>
         <b-form-checkbox v-model="checked" name="check-button" switch>
-          Button Checkbox <b>(Checked: {{ checked }})</b>
         </b-form-checkbox>
       </b-card-text>
     </b-card>
@@ -27,15 +26,11 @@ export default {
       });
     },
   },
-  computed: {
-    result: function () {
-      return (
-        'QuestionNumber: ' +
-        this.question.questionNumber +
-        ' Selected: ' +
-        this.selected
-      );
-    },
+  mounted() {
+    this.$emit('valueChanged', {
+      questionId: this.question.id,
+      value: this.checked,
+    });
   },
 };
 </script>

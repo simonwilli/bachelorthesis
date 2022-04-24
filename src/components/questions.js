@@ -1,7 +1,8 @@
 export const questions = [
   {
     categoryName: 'Functionality',
-    weight: 0.1,
+    weight: 0.2,
+    ref: 'architecture',
     questions: [{
       question: 'Was ist der Einsatzzweck der Applikation? Welche Kritikalität hat die Applikation für das Business?',
       type: 'likert',
@@ -14,6 +15,7 @@ export const questions = [
   {
     categoryName: 'Performance',
     weight: 0.1,
+    ref: 'architecture',
     questions: [
       {
         question: 'Benötigst du eine schnelle Antwortzeit oder Skalierbarkeit',
@@ -34,7 +36,8 @@ export const questions = [
   },
   {
     categoryName: 'Reliability',
-    weight: 0.1,
+    weight: 0.13,
+    ref: 'architecture',
     questions: [
       {
         question: 'Bist du für eine höhere Zuverlässigkeit bereit eine schwierigere Konfigruation in Kauf zunehmen ',
@@ -47,7 +50,8 @@ export const questions = [
     ],
   }, {
     categoryName: 'Security',
-    weight: 0.1,
+    weight: 0.08,
+    ref: 'architecture',
     questions: [
       {
         question: 'Performance vs Sicherheit ',
@@ -60,7 +64,8 @@ export const questions = [
     ],
   }, {
     categoryName: 'Maintainability',
-    weight: 0.1,
+    weight: 0.28,
+    ref: 'architecture',
     questions: [
       {
         question: 'Kein Schnittstellenmanagement vs Erhöhte Wartbarkeit',
@@ -88,7 +93,8 @@ export const questions = [
     ],
   }, {
     categoryName: 'Kultur',
-    weight: 0.3,
+    weight: 0.23,
+    ref: 'architecture',
     questions: [
       {
         question: 'Einfache Architektur vs Entwicklungsgeschwindigkeit',
@@ -111,9 +117,44 @@ export const questions = [
         properties: {
           left: 'Klein',
           right: 'Gross',
+          values: ['1', '1-2', '3-4', '5-6', '7-8', '8-9'],
         },
       },
     ],
+  },
+  {
+    categoryName: 'Cloud',
+    weight: 1,
+    ref: 'cloud',
+    questions: [{
+      question: 'Cloud Strategie ?',
+      resultText: 'Cloud Strategie',
+      type: 'bool',
+    }, {
+      question: 'Cloud Compliance ?',
+      resultText: 'Cloud Compliance',
+      type: 'bool',
+    }, {
+      question: 'Cloud Mitarbeiter ?',
+      resultText: 'Cloud Mitarbeiter',
+      type: 'bool',
+    }, {
+      question: 'Kostenübersicht vs skalierbarkeit ?',
+      resultText: 'Cloud Kosten',
+      type: 'likert',
+      properties: {
+        left: 'Klein',
+        right: 'Gross',
+      },
+    }, {
+      question: 'Laufzeit ?',
+      resultText: 'Cloud Laufzeit',
+      type: 'likert',
+      properties: {
+        left: 'Klein',
+        right: 'Gross',
+      },
+    }],
   },
 ];
 

@@ -5,15 +5,18 @@
         <questionnaire-navigation
           :navigation="categoryNames"
           :currentCategory="currentCategory"
+          @navigationChange="changeNavigation"
         />
         <question-container
           :questions="currentQuestions"
+          :answers="answers"
           @nextPage="onShowNextPage"
           @backPage="onShowBackPage"
           :lastQuestion="isLastCategory"
           :firstQuestion="isFirstCategory"
           @valueChanged="onValueChanged"
           @showResult="onShowResult"
+          @reset="onReset"
         />
       </b-card-text>
     </b-card>
@@ -66,10 +69,20 @@ export default {
     onShowResult() {
       this.showResults = true;
     },
+    onReset() {
+      this.currentCategoryIndex = 0;
+      this.currentCategory = questions[this.currentCategoryIndex].categoryName;
+      this.answers = {};
+    },
     onValueChanged($event) {
       console.log($event);
       const { questionId, value } = $event;
       this.answers[questionId] = value;
+    },
+    changeNavigation(event) {
+      const newCategoryName = event.categoryName;
+      this.currentCategory = newCategoryName;
+      this.currentCategoryIndex = this.categoryNames.indexOf(newCategoryName);
     },
   },
   created() {

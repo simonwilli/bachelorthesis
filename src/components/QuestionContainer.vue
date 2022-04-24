@@ -10,6 +10,8 @@
         <scale-question
           v-if="isScaleQuestion(question)"
           :question="question"
+          :answer="getAnswerForQuestion(question)"
+          :option-values="getOptionValues(question)"
           @valueChanged="valueChanged"
         />
       </div>
@@ -17,12 +19,16 @@
     <b-button variant="primary" @click.prevent="onBackPageClicked" v-if="!firstQuestion">
       Back Page
     </b-button>
+    <b-button variant="secondary" @click.prevent="onResetClicked">
+      Reset
+    </b-button>
     <b-button variant="primary" @click.prevent="onNextPageClicked" v-if="!lastQuestion">
       Next Page
     </b-button>
     <b-button variant="primary" @click.prevent="onShowResultClicked" v-if="lastQuestion">
       Show Result
     </b-button>
+
   </div>
 </template>
 
@@ -35,7 +41,7 @@ export default {
     BooleanQuestion,
     ScaleQuestion,
   },
-  props: ['questions', 'lastQuestion', 'firstQuestion', 'showResult'],
+  props: ['questions', 'answers', 'lastQuestion', 'firstQuestion', 'showResult'],
   methods: {
     onNextPageClicked() {
       this.$emit('nextPage');
@@ -46,6 +52,9 @@ export default {
     onShowResultClicked() {
       this.$emit('showResult');
     },
+    onResetClicked() {
+      this.$emit('reset');
+    },
     valueChanged($event) {
       this.$emit('valueChanged', $event);
     },
@@ -54,6 +63,12 @@ export default {
     },
     isScaleQuestion(question) {
       return question.type === 'likert';
+    },
+    getAnswerForQuestion(question) {
+      return this.answers[question.id];
+    },
+    getOptionValues(question) {
+      return (question.properties && question.properties.values) ?? undefined;
     },
   },
 };
