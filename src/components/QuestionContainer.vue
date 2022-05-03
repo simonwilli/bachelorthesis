@@ -15,20 +15,20 @@
           @valueChanged="valueChanged"
         />
       </div>
-    </div>
-    <b-button variant="primary" @click.prevent="onBackPageClicked" v-if="!firstQuestion">
-      Back Page
-    </b-button>
-    <b-button variant="secondary" @click.prevent="onResetClicked">
+      <b-button  class="float-left buttonleft" variant="primary" @click.prevent="onBackPageClicked" v-if="!firstQuestion">
+        Back Page
+      </b-button>
+    <b-button variant="secondary" @click.prevent="onResetClicked" v-if="!firstQuestion">
       Reset
     </b-button>
-    <b-button variant="primary" @click.prevent="onNextPageClicked" v-if="!lastQuestion">
+    <b-button class="float-right buttonright" variant="primary" @click.prevent="onNextPageClicked" v-if="!lastQuestion">
       Next Page
     </b-button>
-    <b-button variant="primary" @click.prevent="onShowResultClicked" v-if="lastQuestion">
+    <b-button class="float-right buttonright" variant="primary" @click.prevent="onShowResultClicked" v-if="lastQuestion">
       Show Result
     </b-button>
 
+  </div>
   </div>
 </template>
 
@@ -73,3 +73,12 @@ export default {
   },
 };
 </script>
+
+<style lang="scss" scoped>
+.buttonleft{
+  margin-left: 10%;
+}
+.buttonright{
+  margin-right: 10%;
+}
+</style>

@@ -43,7 +43,7 @@ span {
   }
 
   &.selected {
-    color: red;
+    color: blue;
   }
 }
 </style>

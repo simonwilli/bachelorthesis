@@ -1,57 +1,73 @@
 <template>
   <div>
-    <p>Architecture: {{ getArchitectureWinner }} - Hosting: {{ getCloudWinner }}</p>
+    <div class="result-frame">
+    <b-card >
+      <p>Architecture: <span class="bold">{{ getArchitectureWinner }} </span></p>
+      <p>Hosting: <span class="bold"> {{ getCloudWinner }} </span></p>
+    </b-card>
+    </div>
     <div class="result-container">
+      <b-card>
       <div class="architecture-result">
-        <table>
+        <table class="table-spacing">
           <tr>
-            <th>Category</th>
-            <th>Weight</th>
-            <th>Monolith</th>
-            <th>MicroService</th>
+            <th class="table-name">Category</th>
+            <th class="table-weight">Weight</th>
+            <th class="table-monolith">Monolith</th>
+            <th class="table-micro">MicroService</th>
           </tr>
           <tr v-for="data in architectureResultData" :key="data.name">
-            <td>{{ data.name }}</td>
-            <td>{{ data.weight }}</td>
-            <td>{{ formatNumber(data.monolithAverage) }}</td>
-            <td>{{ formatNumber(data.microServiceAverage) }}</td>
+            <td class="table-name">{{ data.name }}</td>
+            <td class="table-weight">{{ data.weight }}</td>
+            <td class="table-monolith">{{ formatNumber(data.monolithAverage) }}</td>
+            <td class="table-micro">{{ formatNumber(data.microServiceAverage) }}</td>
           </tr>
           <tr>
-            <td>total</td>
-            <td>100%</td>
-            <td>{{ formatNumber(monolithTotal) }}</td>
-            <td>{{ formatNumber(microServiceTotal) }}</td>
+            <td class="table-name">total</td>
+            <td class="table-weight">100%</td>
+            <td class="table-monolith">{{ formatNumber(monolithTotal) }}</td>
+            <td class="table-micro">{{ formatNumber(microServiceTotal) }}</td>
           </tr>
         </table>
       </div>
+      </b-card>
       <div class="cloud-result">
-        <table>
+        <b-card>
+        <table class="table-cloud">
           <tr v-for="cloudMust in cloudResultMustData" :key="cloudMust.text">
-            <td>{{ cloudMust.text }}</td>
-            <td>{{ cloudMust.value }}</td>
+            <td class="table-cloud-result-left row-cloud bold">{{ cloudMust.text }}</td>
+            <td class="table-cloud-result-right row-cloud">
+              <b-icon icon="check-square" variant="success" v-if="cloudMust.value"></b-icon>
+              <b-icon icon="x-circle" variant="danger" v-else-if="!cloudMust.value"></b-icon>
+              {{ cloudMust.value }}
+            </td>
           </tr>
         </table>
         <div v-if="allCloudMustTrue">
-          <table>
+          <table class="table-spacing">
             <tr>
-              <th>Category</th>
-              <th>On-Premise</th>
-              <th>Cloud</th>
+              <th class="table-name bold">Category</th>
+              <th class="table-monolith bold">On-Premise</th>
+              <th class="table-micro bold">Cloud</th>
             </tr>
             <tr v-for="cloudScale in cloudResultScaleData" :key="cloudScale.text">
-              <td>{{ cloudScale.text }}</td>
-              <td>{{ formatNumber(cloudScale.onPremValue) }}</td>
-              <td>{{ formatNumber(cloudScale.cloudValue) }}</td>
+              <td class="table-name">{{ cloudScale.text }}</td>
+              <td class="table-monolith">{{ formatNumber(cloudScale.onPremValue) }}</td>
+              <td class="table-micro">{{ formatNumber(cloudScale.cloudValue) }}</td>
             </tr>
             <tr>
-              <td>Total</td>
-              <td>{{ formatNumber(onPremTotal) }}</td>
-              <td>{{ formatNumber(cloudTotal) }}</td>
+              <td class="table-name">Total</td>
+              <td class="table-monolith">{{ formatNumber(onPremTotal) }}</td>
+              <td class="table-micro">{{ formatNumber(cloudTotal) }}</td>
             </tr>
           </table>
         </div>
+        </b-card>
       </div>
     </div>
+    <b-button class="button-reset" variant="secondary" @click.prevent="onResetClicked">
+      Restart
+    </b-button>
   </div>
 </template>
 
@@ -105,6 +121,9 @@ export default {
     },
   },
   methods: {
+    onResetClicked() {
+      this.$emit('reset');
+    },
     formatNumber(n) {
       return n.toFixed(2);
     },
@@ -240,7 +259,24 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.table-spacing {
+  border-spacing: 5px;
+  border-collapse: separate;
+}
+
+.result-frame {
+  text-align: left;
+  margin: auto;
+  max-width: 80%;
+
+  .bold {
+    font-weight: bold;
+  }
+}
 .result-container {
+  max-width: 80%;
+  margin: auto;
+  margin-top: 50px;
   display: grid;
   grid-template-columns: repeat(2, 1fr);
   grid-template-rows: 1fr;
@@ -248,10 +284,53 @@ export default {
 
   .architecture-result {
     grid-area: 1 / 1 / 2 / 2;
+    margin: auto;
   }
 
   .cloud-result {
     grid-area: 1 / 2 / 2 / 3;
+    margin: auto;
+  }
+  .table-name{
+    background: #c4c4c4;
+    text-align: left;
+    width: 150px;
+    border-radius:6px;
+  }
+  .table-monolith{
+    background: #c4d402;
+    width: 150px;
+    border-radius:6px;
+  }
+  .table-weight{
+    width: 100px;
+    border-radius:6px;
+
+  }
+  .table-micro{
+    background: #0075ff;
+    width: 150px;
+    border-radius: 6px;
+  }
+  .row-cloud{
+    background: #c4c4c4;
+    width: 230px;
+  }
+  .table-cloud-result-left{
+    border-top-left-radius: 6px;
+    border-bottom-left-radius: 6px;
+  }
+  .table-cloud-result-right{
+    border-top-right-radius: 6px;
+    border-bottom-right-radius: 6px;
+  }
+  .table-cloud{
+    border-collapse: separate;
+    border-spacing: 0 5px
+  }
+  .button-reset{
+    margin-top: 10px;
+    width: 80%
   }
 }
 </style>

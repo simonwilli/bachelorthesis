@@ -99,14 +99,14 @@ export default {
 <style lang="scss" scoped>
 div.question-grid {
   display: grid;
-  grid-template-columns: 1fr 3fr 1fr;
+  grid-template-columns: 1fr 400px 1fr;
   grid-template-rows: 1fr;
   grid-column-gap: 0px;
   grid-row-gap: 0px;
 
   div.question-grid-left {
     grid-area: 1 / 1 / 2 / 2;
-    justify-self: end;
+      justify-self: center;
     font-weight: bold;
   }
 
@@ -116,7 +116,7 @@ div.question-grid {
 
   div.question-grid-right {
     grid-area: 1 / 3 / 2 / 4;
-    justify-self: start;
+    justify-self: center;
     font-weight: bold;
   }
 }

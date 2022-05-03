@@ -7,8 +7,8 @@ export const questions = [
       question: 'Was ist der Einsatzzweck der Applikation? Welche Kritikalität hat die Applikation für das Business?',
       type: 'likert',
       properties: {
-        left: 'Proof of Concept',
-        right: 'Business Critical',
+        left: 'Prototyp',
+        right: 'Businesskritisch',
       },
     }],
   },
@@ -18,14 +18,14 @@ export const questions = [
     ref: 'architecture',
     questions: [
       {
-        question: 'Benötigst du eine schnelle Antwortzeit oder Skalierbarkeit',
+        question: 'Benötigst du eine schnelle Antwortzeit oder eine bessere Skalierbarkeit',
         type: 'likert',
         properties: {
-          left: 'Kurze Latenz',
+          left: 'Schnelle Antwortzeit',
           right: 'Skalierbarkeit',
         },
       }, {
-        question: 'This is the question text',
+        question: 'Bevorzugst du für deine Applikation eine einfache Architketur oder eine besser Skalierbarkeit',
         type: 'likert',
         properties: {
           left: 'Einfache Architektur',
@@ -40,11 +40,11 @@ export const questions = [
     ref: 'architecture',
     questions: [
       {
-        question: 'Bist du für eine höhere Zuverlässigkeit bereit eine schwierigere Konfigruation in Kauf zunehmen ',
+        question: 'Bist du für eine höhere Zuverlässigkeit bereit eine komplexere Konfigruation in Kauf zunehmen ',
         type: 'likert',
         properties: {
-          left: 'einfache Konfiguration',
-          right: 'Reliability',
+          left: 'Einfache Konfiguration',
+          right: 'Erhöhte Zuverlässigkeit',
         },
       },
     ],
@@ -54,7 +54,7 @@ export const questions = [
     ref: 'architecture',
     questions: [
       {
-        question: 'Performance vs Sicherheit ',
+        question: 'Ist dir eine bessere Performance wichtiger anstatt einer höheren Sicherheit? ',
         type: 'likert',
         properties: {
           left: 'Performance',
@@ -68,7 +68,7 @@ export const questions = [
     ref: 'architecture',
     questions: [
       {
-        question: 'Kein Schnittstellenmanagement vs Erhöhte Wartbarkeit',
+        question: 'Bist du bereit für eine erhöhte Wartbarkeit dich um ein Schnittstellenmanagement zu bemühen?',
         type: 'likert',
         properties: {
           left: 'Kein Schnittstellenmanagment',
@@ -76,14 +76,14 @@ export const questions = [
         },
       },
       {
-        question: 'Tiefe Initialkosten, höhere Wartungskosten vs Hohe Initialkosten, tiefere Wartungskosten',
+        question: 'Bevorzugst du tiefe Initialkosten dafür höhere Wartungskosten oder hohe Initialkosten dafür tiefere Wartungskosten?',
         type: 'likert',
         properties: {
           left: 'Tiefe Initialkosten, höhere Wartungskosten',
           right: 'Hohe Initialkosten, tiefere Wartungskosten',
         },
       }, {
-        question: 'Testbarkeit vs Flexibilität',
+        question: 'Bevorzugst du eine einfachere Testbarkeit oder benötigst du eine grössere Flexibilität in den Programmiersprachen?',
         type: 'likert',
         properties: {
           left: 'Testbarkeit',
@@ -101,18 +101,18 @@ export const questions = [
         type: 'likert',
         properties: {
           left: 'Einfache Architektur ',
-          right: 'Entwicklungsgeschwindigkeit',
+          right: 'Geschwindigkeit',
         },
       },
       {
-        question: 'Klassische Kultur vs DevOps Kultur',
+        question: 'Wie schätzt du den Stand der DevOps-Kultur Adaption ein? ',
         type: 'likert',
         properties: {
           left: 'Klassische Kultur',
           right: 'DevOps Kultur',
         },
       }, {
-        question: 'Projektgrösse',
+        question: 'Wie gross ist das Projektteam für diese Applikation',
         type: 'likert',
         properties: {
           left: 'Klein',
@@ -127,32 +127,33 @@ export const questions = [
     weight: 1,
     ref: 'cloud',
     questions: [{
-      question: 'Cloud Strategie ?',
+      question: 'Wurde bereits eine Cloud Strategie festgelegt?',
       resultText: 'Cloud Strategie',
       type: 'bool',
     }, {
-      question: 'Cloud Compliance ?',
+      question: 'Wurde die Cloudnutzung durch die Compliance Abteilung bereits freigegen ?',
       resultText: 'Cloud Compliance',
       type: 'bool',
     }, {
-      question: 'Cloud Mitarbeiter ?',
+      question: 'Sind die Mitarbeiter bereits genügent für die Nutzung der Cloud geschult worden ?',
       resultText: 'Cloud Mitarbeiter',
       type: 'bool',
     }, {
-      question: 'Kostenübersicht vs skalierbarkeit ?',
+      question: 'Möchtest du eine klare Kostenübersicht oder lieber eine endlose Skalierbarkeit?',
       resultText: 'Cloud Kosten',
       type: 'likert',
       properties: {
-        left: 'Klein',
-        right: 'Gross',
+        left: 'Klare Kostenübersicht',
+        right: 'Skalierbarkeit',
       },
     }, {
-      question: 'Laufzeit ?',
+      question: 'Wie lange wird die Applikation betrieben (in Jahren)?',
       resultText: 'Cloud Laufzeit',
       type: 'likert',
       properties: {
-        left: 'Klein',
-        right: 'Gross',
+        left: 'Lang',
+        right: 'Kurz',
+        values: ['>7', '6-7', '4-6', '2-4', '1-2', '<1'],
       },
     }],
   },

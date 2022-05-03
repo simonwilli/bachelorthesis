@@ -22,7 +22,7 @@
     </b-card>
   </div>
   <div class="result-container" v-else>
-    <result-container :questions="allQuestions" :answers="answers" :categoryNames="categoryNames" />
+    <result-container :questions="allQuestions" :answers="answers" :categoryNames="categoryNames" @reset="onReset" />
   </div>
 </template>
 
@@ -70,12 +70,12 @@ export default {
       this.showResults = true;
     },
     onReset() {
+      this.showResults = false;
       this.currentCategoryIndex = 0;
       this.currentCategory = questions[this.currentCategoryIndex].categoryName;
       this.answers = {};
     },
     onValueChanged($event) {
-      console.log($event);
       const { questionId, value } = $event;
       this.answers[questionId] = value;
     },
