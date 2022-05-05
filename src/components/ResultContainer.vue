@@ -8,6 +8,8 @@
     </div>
     <div class="result-container">
       <b-card>
+        <h3>Vergleich Architektur</h3>
+        <p>Max 300 Punkte</p>
       <div class="architecture-result">
         <table class="table-spacing">
           <tr>
@@ -18,28 +20,29 @@
           </tr>
           <tr v-for="data in architectureResultData" :key="data.name">
             <td class="table-name">{{ data.name }}</td>
-            <td class="table-weight">{{ data.weight }}</td>
-            <td class="table-monolith">{{ formatNumber(data.monolithAverage) }}</td>
-            <td class="table-micro">{{ formatNumber(data.microServiceAverage) }}</td>
+            <td class="table-weight">{{ formatNumber(data.weight) }}%</td>
+            <td class="table-monolith">{{ formatNumber(data.monolithAverage) }} Pt.</td>
+            <td class="table-micro">{{ formatNumber(data.microServiceAverage) }} Pt.</td>
           </tr>
           <tr>
             <td class="table-name">total</td>
             <td class="table-weight">100%</td>
-            <td class="table-monolith">{{ formatNumber(monolithTotal) }}</td>
-            <td class="table-micro">{{ formatNumber(microServiceTotal) }}</td>
+            <td class="table-monolith">{{ formatNumber(monolithTotal) }} Pt.</td>
+            <td class="table-micro">{{ formatNumber(microServiceTotal) }} Pt.</td>
           </tr>
         </table>
       </div>
       </b-card>
       <div class="cloud-result">
         <b-card>
+          <h3>Vergleich OnPremise vs. Cloud</h3>
+          <p>Max 6 Punkte</p>
         <table class="table-cloud">
           <tr v-for="cloudMust in cloudResultMustData" :key="cloudMust.text">
             <td class="table-cloud-result-left row-cloud bold">{{ cloudMust.text }}</td>
             <td class="table-cloud-result-right row-cloud">
               <b-icon icon="check-square" variant="success" v-if="cloudMust.value"></b-icon>
               <b-icon icon="x-circle" variant="danger" v-else-if="!cloudMust.value"></b-icon>
-              {{ cloudMust.value }}
             </td>
           </tr>
         </table>
@@ -52,13 +55,13 @@
             </tr>
             <tr v-for="cloudScale in cloudResultScaleData" :key="cloudScale.text">
               <td class="table-name">{{ cloudScale.text }}</td>
-              <td class="table-monolith">{{ formatNumber(cloudScale.onPremValue) }}</td>
-              <td class="table-micro">{{ formatNumber(cloudScale.cloudValue) }}</td>
+              <td class="table-monolith">{{ (cloudScale.onPremValue) }} Pt.</td>
+              <td class="table-micro">{{ (cloudScale.cloudValue) }} Pt.</td>
             </tr>
             <tr>
               <td class="table-name">Total</td>
-              <td class="table-monolith">{{ formatNumber(onPremTotal) }}</td>
-              <td class="table-micro">{{ formatNumber(cloudTotal) }}</td>
+              <td class="table-monolith">{{ (onPremTotal) }} Pt.</td>
+              <td class="table-micro">{{ (cloudTotal) }} Pt.</td>
             </tr>
           </table>
         </div>
@@ -125,7 +128,7 @@ export default {
       this.$emit('reset');
     },
     formatNumber(n) {
-      return n.toFixed(2);
+      return (n * 100).toFixed(0);
     },
     getCategoryByName(categoryName) {
       for (const category of this.questions) {
@@ -295,34 +298,34 @@ export default {
     background: #c4c4c4;
     text-align: left;
     width: 150px;
-    border-radius:6px;
+    border-radius:4px;
   }
   .table-monolith{
     background: #c4d402;
     width: 150px;
-    border-radius:6px;
+    border-radius:4px;
   }
   .table-weight{
     width: 100px;
-    border-radius:6px;
+    border-radius:4px;
 
   }
   .table-micro{
     background: #0075ff;
     width: 150px;
-    border-radius: 6px;
+    border-radius: 4px;
   }
   .row-cloud{
     background: #c4c4c4;
     width: 230px;
   }
   .table-cloud-result-left{
-    border-top-left-radius: 6px;
-    border-bottom-left-radius: 6px;
+    border-top-left-radius: 4px;
+    border-bottom-left-radius: 4px;
   }
   .table-cloud-result-right{
-    border-top-right-radius: 6px;
-    border-bottom-right-radius: 6px;
+    border-top-right-radius: 4px;
+    border-bottom-right-radius: 4px;
   }
   .table-cloud{
     border-collapse: separate;

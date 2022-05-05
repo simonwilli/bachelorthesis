@@ -28,16 +28,19 @@ export default {
 <style lang="scss">
 .documentationframe {
   text-align: left;
-  color: blue;
+  color: black;
   margin: auto;
   margin-bottom: 15px;
   max-width: 80%;
+  object-fit: cover;
 
   h1 {
-    color: blue;
+    color: black;
   }
   img {
-    max-width: 20%;
+    max-width: 25%;
+    object-fit: contain;
+    padding: 10px;
   }
 }
 </style>

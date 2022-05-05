@@ -1,7 +1,7 @@
 export const questions = [
   {
     categoryName: 'Functionality',
-    weight: 0.2,
+    weight: 0.3,
     ref: 'architecture',
     questions: [{
       question: 'Was ist der Einsatzzweck der Applikation? Welche Kritikalität hat die Applikation für das Business?',
@@ -14,7 +14,7 @@ export const questions = [
   },
   {
     categoryName: 'Performance',
-    weight: 0.1,
+    weight: 0.09,
     ref: 'architecture',
     questions: [
       {
@@ -36,7 +36,7 @@ export const questions = [
   },
   {
     categoryName: 'Reliability',
-    weight: 0.13,
+    weight: 0.1,
     ref: 'architecture',
     questions: [
       {
@@ -50,21 +50,21 @@ export const questions = [
     ],
   }, {
     categoryName: 'Security',
-    weight: 0.08,
+    weight: 0.1,
     ref: 'architecture',
     questions: [
       {
         question: 'Ist dir eine bessere Performance wichtiger anstatt einer höheren Sicherheit? ',
         type: 'likert',
         properties: {
-          left: 'Performance',
-          right: 'Sicherheit',
+          left: 'Sicherheit',
+          right: 'Performance',
         },
       },
     ],
   }, {
     categoryName: 'Maintainability',
-    weight: 0.28,
+    weight: 0.24,
     ref: 'architecture',
     questions: [
       {
@@ -93,7 +93,7 @@ export const questions = [
     ],
   }, {
     categoryName: 'Kultur',
-    weight: 0.23,
+    weight: 0.17,
     ref: 'architecture',
     questions: [
       {
