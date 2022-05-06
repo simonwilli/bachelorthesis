@@ -1,8 +1,8 @@
 <template>
   <div id="app">
     <nav>
-      <router-link :to="{ name: 'questionnaire' }">Questionnaire</router-link> |
-      <router-link :to="{ name: 'documentation' }">Documentation</router-link>
+      <router-link :to="{ name: 'questionnaire' }">Fragebogen</router-link> |
+      <router-link :to="{ name: 'documentation' }">Dokumentation</router-link>
     </nav>
     <router-view />
   </div>

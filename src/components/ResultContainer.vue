@@ -13,10 +13,10 @@
       <div class="architecture-result">
         <table class="table-spacing">
           <tr>
-            <th class="table-name">Category</th>
-            <th class="table-weight">Weight</th>
-            <th class="table-monolith">Monolith</th>
-            <th class="table-micro">MicroService</th>
+            <th class="header-name">Kategorie </th>
+            <th class="header-weight">Gewicht</th>
+            <th class="header-monolith">VM / Monolith</th>
+            <th class="header-micro">Container / MicroService</th>
           </tr>
           <tr v-for="data in architectureResultData" :key="data.name">
             <td class="table-name">{{ data.name }}</td>
@@ -25,10 +25,10 @@
             <td class="table-micro">{{ formatNumber(data.microServiceAverage) }} Pt.</td>
           </tr>
           <tr>
-            <td class="table-name">total</td>
-            <td class="table-weight">100%</td>
-            <td class="table-monolith">{{ formatNumber(monolithTotal) }} Pt.</td>
-            <td class="table-micro">{{ formatNumber(microServiceTotal) }} Pt.</td>
+            <td class="table-name bold">Total</td>
+            <td class="table-weight bold">100%</td>
+            <td class="table-monolith bold">{{ formatNumber(monolithTotal) }} Pt.</td>
+            <td class="table-micro bold">{{ formatNumber(microServiceTotal) }} Pt.</td>
           </tr>
         </table>
       </div>
@@ -49,9 +49,9 @@
         <div v-if="allCloudMustTrue">
           <table class="table-spacing">
             <tr>
-              <th class="table-name bold">Category</th>
-              <th class="table-monolith bold">On-Premise</th>
-              <th class="table-micro bold">Cloud</th>
+              <th class="header-name bold">Kategorie </th>
+              <th class="header-monolith bold">vor Ort</th>
+              <th class="header-micro bold">Cloud</th>
             </tr>
             <tr v-for="cloudScale in cloudResultScaleData" :key="cloudScale.text">
               <td class="table-name">{{ cloudScale.text }}</td>
@@ -59,9 +59,9 @@
               <td class="table-micro">{{ (cloudScale.cloudValue) }} Pt.</td>
             </tr>
             <tr>
-              <td class="table-name">Total</td>
-              <td class="table-monolith">{{ (onPremTotal) }} Pt.</td>
-              <td class="table-micro">{{ (cloudTotal) }} Pt.</td>
+              <td class="table-name bold">Total</td>
+              <td class="table-monolith bold">{{ (onPremTotal) }} Pt.</td>
+              <td class="table-micro bold">{{ (cloudTotal) }} Pt.</td>
             </tr>
           </table>
         </div>
@@ -92,27 +92,27 @@ export default {
     getArchitectureWinner() {
       console.log('T', this.monolithTotal, this.microServiceTotal);
       if ((this.monolithTotal === this.microServiceTotal) || (Number.isNaN(this.monolithTotal) && Number.isNaN(this.microServiceTotal))) {
-        return 'Both architectures fit equally well';
+        return 'Beide Technologien/Architekturen können verwendet werden';
       }
 
       if (this.monolithTotal > this.microServiceTotal) {
-        return 'Monolith';
+        return 'Virtuelle Maschine / Monolith';
       }
-      return 'Micro Services';
+      return 'Container / Micro Services';
     },
     getCloudWinner() {
       if (!this.allCloudMustTrue) {
-        return 'On-Premise';
+        return 'onPremise / vor Ort';
       }
 
       if (this.cloudTotal === this.onPremTotal) {
-        return 'Both Cloud and On-Premise fit equally well';
+        return 'Keine Preferänz';
       }
 
       if (this.cloudTotal > this.onPremTotal) {
         return 'Cloud';
       }
-      return 'On-Premise';
+      return 'onPremise / vor Ort';
     },
     allCloudMustTrue() {
       for (const cloudMust of this.cloudResultMustData) {
@@ -262,19 +262,11 @@ export default {
 </script>
 
 <style lang="scss" scoped>
-.table-spacing {
-  border-spacing: 5px;
-  border-collapse: separate;
-}
 
 .result-frame {
   text-align: left;
   margin: auto;
   max-width: 80%;
-
-  .bold {
-    font-weight: bold;
-  }
 }
 .result-container {
   max-width: 80%;
@@ -285,6 +277,17 @@ export default {
   grid-template-rows: 1fr;
   grid-column-gap: 10px;
 
+  th, td {
+    padding: 5px;
+  }
+  .bold {
+    font-weight: bold;
+  }
+  .table-spacing {
+    border-spacing: 5px;
+    border-collapse: separate;
+  }
+
   .architecture-result {
     grid-area: 1 / 1 / 2 / 2;
     margin: auto;
@@ -294,24 +297,47 @@ export default {
     grid-area: 1 / 2 / 2 / 3;
     margin: auto;
   }
-  .table-name{
+  .header-name{
     background: #c4c4c4;
     text-align: left;
     width: 150px;
     border-radius:4px;
   }
-  .table-monolith{
+  .header-monolith{
     background: #c4d402;
     width: 150px;
     border-radius:4px;
   }
+  .header-weight{
+    background: #c4c4c4;
+    width: 100px;
+    border-radius:4px;
+
+  }
+  .header-micro{
+    background: #66a7f2;
+    width: 150px;
+    border-radius: 4px;
+  }
+  .table-name{
+    background: #f4f4f4;
+    text-align: left;
+    width: 150px;
+    border-radius:4px;
+  }
+  .table-monolith{
+    background: #e7ed99;
+    width: 150px;
+    border-radius:4px;
+  }
   .table-weight{
+    background: #f4f4f4;
     width: 100px;
     border-radius:4px;
 
   }
   .table-micro{
-    background: #0075ff;
+    background: #b2d3f8;
     width: 150px;
     border-radius: 4px;
   }
@@ -322,6 +348,7 @@ export default {
   .table-cloud-result-left{
     border-top-left-radius: 4px;
     border-bottom-left-radius: 4px;
+    text-align: left;
   }
   .table-cloud-result-right{
     border-top-right-radius: 4px;
