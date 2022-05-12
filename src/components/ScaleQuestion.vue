@@ -96,7 +96,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 div.question-grid {
   display: grid;
   grid-template-columns: 1fr 400px 1fr;
@@ -106,7 +106,7 @@ div.question-grid {
 
   div.question-grid-left {
     grid-area: 1 / 1 / 2 / 2;
-      justify-self: center;
+    justify-self: center;
     font-weight: bold;
   }
 
