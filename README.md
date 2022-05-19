@@ -28,14 +28,8 @@ See [Configuration Reference](https://cli.vuejs.org/config/).
 docker build -t simonwilli/decisionhelper .
 ```
 
-### Push to dockerhub
-
-```
-docker push simonwilli/decisionhelper
-```
-
 ### Run in docker
 
 ```
-docker run -d -p 80:80 zhaw/prototyp-app:latest
+docker run -d -p 80:80 simonwilli/decisionhelper:latest
 ```
