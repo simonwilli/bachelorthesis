@@ -1,6 +1,6 @@
 export const questions = [
   {
-    categoryName: 'Funkionalität',
+    categoryName: 'Funktionalität',
     weight: 0.3,
     ref: 'architecture',
     questions: [{
