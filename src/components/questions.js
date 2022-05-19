@@ -1,6 +1,6 @@
 export const questions = [
   {
-    categoryName: 'Functionality',
+    categoryName: 'Funkionalität',
     weight: 0.3,
     ref: 'architecture',
     questions: [{
@@ -35,7 +35,7 @@ export const questions = [
     ],
   },
   {
-    categoryName: 'Reliability',
+    categoryName: 'Zuverlässigkeit',
     weight: 0.1,
     ref: 'architecture',
     questions: [
@@ -49,7 +49,7 @@ export const questions = [
       },
     ],
   }, {
-    categoryName: 'Security',
+    categoryName: 'Sicherheit',
     weight: 0.1,
     ref: 'architecture',
     questions: [
@@ -92,7 +92,7 @@ export const questions = [
       },
     ],
   }, {
-    categoryName: 'Kultur',
+    categoryName: 'Rahmenbedinungen',
     weight: 0.17,
     ref: 'architecture',
     questions: [
